@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Operations V17 活动详细总结</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a56db',
+                        secondary: '#0f172a',
+                        accent: '#3b82f6',
+                        light: '#f8fafc',
+                        dark: '#0f172a'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-custom {
+                transition: all 0.3s ease;
+            }
+        }
+    </style>
+    
+    <style>
+        /* 基础优化 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            overflow-x: hidden;
+        }
+        
+        /* 加载动画 */
+        .loader {
+            border-top-color: #1a56db;
+            animation: spinner 0.6s linear infinite;
+        }
+        
+        @keyframes spinner {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 表格响应式处理 */
+        @media (max-width: 768px) {
+            .responsive-table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+    <!-- 加载动画 -->
+    <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
+        <div class="loader w-12 h-12 rounded-full border-4 border-gray-200"></div>
+    </div>
+
+    <!-- 页面头部 -->
+    <header class="bg-gradient-to-r from-primary to-accent text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <h1 class="text-2xl md:text-3xl font-bold text-shadow">Real Operations V17</h1>
+                <p class="opacity-90">欧洲卡车模拟2 活动总结</p>
+            </div>
+            <div class="flex items-center">
+                <i class="fa fa-truck mr-2 text-xl"></i>
+                <span class="text-xl font-semibold">DongFeng Club 东风俱乐部</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 导航栏 -->
+    <nav class="sticky top-0 bg-white shadow-md z-40 transition-custom">
+        <div class="container mx-auto px-4">
+            <ul class="flex overflow-x-auto py-3 space-x-1 md:space-x-4 text-sm md:text-base hide-scrollbar">
+                <li><a href="#basic-info" class="px-3 py-2 rounded hover:bg-primary hover:text-white transition-custom"><i class="fa fa-info-circle mr-1"></i>活动基础信息</a></li>
+                <li><a href="#participation" class="px-3 py-2 rounded hover:bg-primary hover:text-white transition-custom"><i class="fa fa-user-plus mr-1"></i>参与方式</a></li>
+                <li><a href="#features" class="px-3 py-2 rounded hover:bg-primary hover:text-white transition-custom"><i class="fa fa-star mr-1"></i>活动特色</a></li>
+                <li><a href="#rules" class="px-3 py-2 rounded hover:bg-primary hover:text-white transition-custom"><i class="fa fa-list-alt mr-1"></i>活动规则</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden max-w-5xl mx-auto">
+            <!-- 封面图 - 使用与头部相同的渐变背景 -->
+            <div class="h-48 md:h-64 bg-gradient-to-r from-primary to-accent relative">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <h1 class="text-3xl md:text-4xl font-bold text-white text-shadow text-center px-4">Real Operations V17 活动详细总结</h1>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-8">
+                <p class="text-gray-700 mb-8 leading-relaxed">
+                    该网页是欧洲卡车模拟2（ETS2）线上平台TruckersMP发起的“Real Operations V17”活动专属介绍页，围绕活动核心信息、参与规则、玩家权益等维度展开，为参与者提供全面指引。
+                </p>
+
+                <!-- 活动核心基础信息 -->
+                <section id="basic-info" class="mb-12 scroll-mt-20">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-info"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-secondary">一、活动核心基础信息</h2>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4">1. 活动基本属性</h3>
+                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
+                        <li><strong>活动名称</strong>：Real Operations V17（第十七届“真实运营”主题活动）</li>
+                        <li><strong>活动类型</strong>：ETS2（欧洲卡车模拟2）车队联机活动</li>
+                        <li><strong>活动氛围定位</strong>：Mellow（轻松友好）</li>
+                        <li><strong>服务器信息</strong>：使用专属“Event Server”（活动服务器），标识编号为1365、159</li>
+                        <li><strong>主沟通语言</strong>：英语</li>
+                        <li>
+                            <strong>专属沟通渠道</strong>：Discord频道（链接：
+                            <a href="https://discord.com/channels/307433337126125568/720400776366653490" target="_blank" class="text-primary hover:underline flex items-center">
+                                https://discord.com/... <i class="fa fa-external-link ml-1 text-xs"></i>
+                            </a>），供参与者实时交流
+                        </li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4">2. 时间与时区说明</h3>
+                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
+                        <li><strong>活动时间</strong>：2025年8月30日（周六）15:00 - 19:00 UTC（国际协调时间），总时长4小时</li>
+                        <li><strong>时区查询提示</strong>：若不确定当地对应时间，可参考活动提供的“Alternative Time Zones”（其他时区对照表），避免错过参与时段</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4">3. 地理范围与路线规则</h3>
+                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
+                        <li><strong>核心覆盖区域</strong>：围绕6座欧洲城市展开，明确提及日内瓦、苏黎世、米兰，其余城市可通过活动专属“区域地图”查看</li>
+                        <li>
+                            <strong>起点与终点规则</strong>：
+                            <ul class="list-circle pl-6 mt-1">
+                                <li>起点：活动覆盖范围内的任意城市（“Any City Within The Area Of Play”）</li>
+                                <li>终点：活动范围内任意安全地点（“End Anywhere In A Safe Location”）</li>
+                            </ul>
+                        </li>
+                        <li><strong>路线自由度</strong>：参与者可在活动高亮区域内自由漫游，选择任意路线；若想重温某一“运营场景”，可在路口、环岛等安全位置掉头返回</li>
+                    </ul>
+                </section>
+
+                <!-- 参与方式与专属权益 -->
+                <section id="participation" class="mb-12 scroll-mt-20">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-secondary">二、参与方式与专属权益</h2>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4">1. 参与步骤</h3>
+                    <ol class="list-decimal pl-6 mb-6 space-y-2 text-gray-700">
+                        <li>打开TruckersMP启动器，运行欧洲卡车模拟2（ETS2）</li>
+                        <li>在服务器列表顶部找到“Real Operations V17”专属服务器，点击选择即可加入</li>
+                    </ol>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4">2. 参与者专属奖励</h3>
+                    <div class="bg-blue-50 border-l-4 border-primary p-4 rounded mb-6">
+                        <p class="text-gray-700">
+                            参与本次活动可获得<strong class="text-primary">个人账号专属特殊成就</strong>，该成就仅针对本次活动发放，具有唯一性，无其他获取途径
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 活动特色内容 -->
+                <section id="features" class="mb-12 scroll-mt-20">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-secondary">三、活动特色内容</h2>
+                    </div>
+
+                    <p class="text-gray-700 mb-4">作为年度重点活动，本次活动主打“实时沉浸式体验”，核心特色包括：</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-custom">
+                            <div class="flex items-center mb-2">
+                                <i class="fa fa-refresh text-primary mr-2"></i>
+                                <h4 class="font-semibold">动态运营场景</h4>
+                            </div>
+                            <p class="text-sm text-gray-600">活动过程中会实时触发各类运营事件，参与者可能在行驶中直接目睹场景发生</p>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-custom">
+                            <div class="flex items-center mb-2">
+                                <i class="fa fa-ambulance text-primary mr-2"></i>
+                                <h4 class="font-semibold">多元特殊元素</h4>
+                            </div>
+                            <p class="text-sm text-gray-600">包含应急车辆调度、警车追捕等互动场景，模拟真实货运道路环境</p>
+                        </div>
+                        
+                        <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-custom">
+                            <div class="flex items-center mb-2">
+                                <i class="fa fa-tasks text-primary mr-2"></i>
+                                <h4 class="font-semibold">灵活任务选择</h4>
+                            </div>
+                            <p class="text-sm text-gray-600">参与者可在活动区域内接取“城市间货运任务”，也可使用自有挂车行驶</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 活动规则 -->
+                <section id="rules" class="mb-8 scroll-mt-20">
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-3">
+                            <i class="fa fa-gavel"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-secondary">四、活动规则（含临时特殊规则）</h2>
+                    </div>
+
+                    <p class="text-gray-700 mb-4">本次活动规则经“Event Management”（活动管理团队）审核通过，参与者需严格遵守，具体分为基础行为规范、车辆与车道规则、工作人员协作要求三类：</p>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4">1. 基础行为规范</h3>
+                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
+                        <li>禁止干扰TruckersMP团队预设的“运营场景”，禁止私自发起“个人运营活动”（包括组建私人超大型车辆车队）</li>
+                        <li>超车需满足“安全+合规”双重条件，严禁从排队车流中超车</li>
+                        <li>需全程在“Real Operations V17活动区域”内行驶，超出区域将被判定为“自由漫游”，脱离活动范畴</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4">2. 车辆与车道规则</h3>
+                    <div class="responsive-table mb-6">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 border-b">规则类别</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 border-b">具体要求</th>
+                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 border-b">补充说明</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50 transition-custom">
+                                    <td class="py-3 px-4 text-sm text-gray-700">车辆配置限制</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">禁止使用双挂车、三挂车、HCT（重型组合挂车）配置</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">无例外情况，所有参与者统一执行</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-custom">
+                                    <td class="py-3 px-4 text-sm text-gray-700">车道使用规范</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">车道上方显示“红色X”时，禁止进入该车道；若所有车道均显示“红色X”，需在原地等待信号变更</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">进入禁行车道前，会有提前提醒；禁止穿越“全车道红色X”标识的龙门架</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-custom">
+                                    <td class="py-3 px-4 text-sm text-gray-700">限速要求</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">需遵守“车道上方 overhead 限速标识”，该限速可能与导航显示速度不一致</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">由“highways team”（高速公路管理团队）负责执法，违规将被处理</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-custom">
+                                    <td class="py-3 px-4 text-sm text-gray-700">应急车道使用</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">应急车道可临时作为“正常通行车道”，但仅能在“overhead信号指引”下进入，且需遵守该车道专属限速；禁止在应急车道作为通行车道时停车（否则判定为“阻塞交通”）</td>
+                                    <td class="py-3 px-4 text-sm text-gray-700">若车辆故障无法移动，需立即按“F7+Enter”发起求助，避免阻塞道路</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4">3. 工作人员协作要求</h3>
+                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
+                        <li>需无条件服从工作人员指令，包括但不限于：被引导靠边停车、为应急车辆让行、配合“滚动式封路”（临时分段封路）</li>
+                        <li>工作人员使用CB（车载对讲机）时，不受“CB滥用规则”限制，参与者禁止干涉工作人员通讯</li>
+                        <li>
+                            需实时关注“overhead signage”（ overhead 交通标识），该标识可能在活动中随时变更；若需了解标识含义，可参考知识库链接（
+                            <a href="https://truckersmp.com/knowledge-base/article/1091" target="_blank" class="text-primary hover:underline flex items-center">
+                                https://truckersmp.com/... <i class="fa fa-external-link ml-1 text-xs"></i>
+                            </a>，支持多语言）
+                        </li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4">4. 特殊规则提示</h3>
+                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
+                        <li>
+                            应急车辆让行有专属指导：可通过视频链接（
+                            <a href="https://youtu.be/Sq_qBijChWk" target="_blank" class="text-primary hover:underline flex items-center">
+                                https://youtu.be/... <i class="fa fa-external-link ml-1 text-xs"></i>
+                            </a>）学习“安全让行方法”，视频跳转至外部平台
+                        </li>
+                        <li>所有规则最终解释权归TruckersMP活动管理团队所有，违规可能面临临时禁赛、账号限制等处罚</li>
+                    </ul>
+                </section>
+
+                <!-- 快速参考卡片 -->
+                <div class="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-5 border border-primary/20 mb-8">
+                    <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
+                        <i class="fa fa-calendar-check-o mr-2"></i> 活动快速参考
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm text-gray-600"><strong class="text-gray-800">日期：</strong>2025年8月30日（周六）</p>
+                            <p class="text-sm text-gray-600"><strong class="text-gray-800">时间：</strong>15:00 - 19:00 UTC</p>
+                            <p class="text-sm text-gray-600"><strong class="text-gray-800">服务器：</strong>Real Operations V17（1365、159）</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600"><strong class="text-gray-800">语言：</strong>英语</p>
+                            <p class="text-sm text-gray-600"><strong class="text-gray-800">奖励：</strong>专属活动成就</p>
+                            <p class="text-sm text-gray-600"><strong class="text-gray-800">区域：</strong>欧洲6城市（含日内瓦、苏黎世、米兰）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-secondary text-white py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center justify-center md:justify-start">
+                        <i class="fa fa-truck mr-2 text-xl"></i>
+                        <span class="text-xl font-semibold">DongFeng Club 东风俱乐部</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-2 text-center md:text-left">欧洲卡车模拟2 玩家社区</p>
+                </div>
+                
+                <div class="flex flex-col items-center md:items-end">
+                    <!-- 添加QQ交流群信息 -->
+                    <div class="mb-3 flex items-center">
+                        <i class="fa fa-qq text-gray-300 mr-2 text-xl"></i>
+                        <span class="text-white font-medium">QQ交流群：581857596</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">© 2025 DongFeng Club. 保留所有权利。</p>
+                    <p class="text-gray-500 text-xs mt-1">本页面仅供活动信息参考，与游戏官方无关</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-custom z-40">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // 页面加载完成后隐藏加载动画
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loader = document.getElementById('loader');
+                loader.classList.add('opacity-0');
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 300);
+            }, 500);
+        });
+
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+            
+            // 导航栏滚动效果
+            const nav = document.querySelector('nav');
+            if (window.pageYOffset > 100) {
+                nav.classList.add('py-2', 'shadow-lg');
+                nav.classList.remove('py-3', 'shadow-md');
+            } else {
+                nav.classList.add('py-3', 'shadow-md');
+                nav.classList.remove('py-2', 'shadow-lg');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+    
