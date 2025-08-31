@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Operations V17 活动详细总结</title>
-    <!-- 引入Tailwind CSS -->
+    <title>TruckersMP智能标识（Smart Signs Signs）翻译与详细总结</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
-    <!-- 配置Tailwind自定义颜色和字体 -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1a56db',
-                        secondary: '#0f172a',
-                        accent: '#3b82f6',
-                        light: '#f8fafc',
-                        dark: '#0f172a'
+                        primary: '#e63946',
+                        secondary: '#457b9d',
+                        accent: '#1d3557',
+                        light: '#f1faee',
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -28,351 +23,465 @@
             }
         }
     </script>
-    
-    <!-- 自定义工具类 -->
     <style type="text/tailwindcss">
         @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
             .text-shadow {
                 text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             .transition-custom {
                 transition: all 0.3s ease;
             }
-        }
-    </style>
-    
-    <style>
-        /* 基础优化 */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            overflow-x: hidden;
-        }
-        
-        /* 加载动画 */
-        .loader {
-            border-top-color: #1a56db;
-            animation: spinner 0.6s linear infinite;
-        }
-        
-        @keyframes spinner {
-            to { transform: rotate(360deg); }
-        }
-        
-        /* 表格响应式处理 */
-        @media (max-width: 768px) {
-            .responsive-table {
-                display: block;
+            .card-hover {
+                @apply hover:shadow-lg hover:-translate-y-1 transition-all duration-300;
+            }
+            .header-gradient {
+                background: linear-gradient(135deg, #f1faee 0%, #a8dadc 50%, #457b9d 100%);
+            }
+            .logo-container {
+                @apply p-0 bg-transparent;
+            }
+            
+            /* 加载动画动画样式 */
+            .loader-container {
+                position: fixed;
+                top: 0;
+                left: 0;
                 width: 100%;
-                overflow-x: auto;
+                height: 100%;
+                background-color: #fff;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                transition: opacity 0.5s ease-out, visibility 0.5s;
+            }
+            
+            .loader {
+                width: 60px;
+                height: 60px;
+                border: 5px solid #f1faee;
+                border-top-color: #e63946;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                position: relative;
+                margin-bottom: 20px;
+            }
+            
+            .loader::after {
+                content: "\f0d1";
+                font-family: "FontAwesome";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #457b9d;
+                font-size: 24px;
+            }
+            
+            .loading-text {
+                color: #457b9d;
+                font-size: 18px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+            }
+            
+            .progress-bar {
+                width: 200px;
+                height: 4px;
+                background-color: #f1faee;
+                border-radius: 2px;
+                margin-top: 15px;
+                overflow: hidden;
+            }
+            
+            .progress {
+                height: 100%;
+                background-color: #e63946;
+                width: 0%;
+                transition: width 0.3s ease;
+            }
+            
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            
+            /* 页面内容初始隐藏 */
+            .page-content {
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.5s ease-in, visibility 0.5s;
+            }
+            
+            /* 加载完成后显示内容 */
+            .loaded .page-content {
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .loaded .loader-container {
+                opacity: 0;
+                visibility: hidden;
             }
         }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
-    <!-- 加载动画 -->
-    <div id="loader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
-        <div class="loader w-12 h-12 rounded-full border-4 border-gray-200"></div>
+    <!-- 加载动画容器 -->
+    <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loading-text">正在加载内容...</div>
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
     </div>
 
-    <!-- 页面头部 -->
-    <header class="bg-gradient-to-r from-primary to-accent text-white shadow-lg">
-        <div class="container mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-4 md:mb-0">
-                <h1 class="text-2xl md:text-3xl font-bold text-shadow">Real Operations V17</h1>
-                <p class="opacity-90">欧洲卡车模拟2 活动总结</p>
+    <!-- 页面内容 -->
+    <div class="page-content">
+        <!-- 头部俱乐部标识（含优化后logo） -->
+        <header class="header-gradient text-accent shadow-md py-6 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+                <i class="fa fa-truck absolute -top-10 -left-10 text-[100px] rotate-12"></i>
+                <i class="fa fa-road absolute top-20 right-20 text-[80px] -rotate-12"></i>
+                <i class="fa fa-sign absolute bottom-10 left-1/3 text-[60px] rotate-6"></i>
             </div>
-            <div class="flex items-center">
-                <i class="fa fa-truck mr-2 text-xl"></i>
-                <span class="text-xl font-semibold">DongFeng Club 东风俱乐部</span>
-            </div>
-        </div>
-    </header>
-
-    <!-- 导航栏 -->
-    <nav class="sticky top-0 bg-white shadow-md z-40 transition-custom">
-        <div class="container mx-auto px-4">
-            <ul class="flex overflow-x-auto py-3 space-x-1 md:space-x-4 text-sm md:text-base hide-scrollbar">
-                <li><a href="#basic-info" class="px-3 py-2 rounded hover:bg-primary hover:text-white transition-custom"><i class="fa fa-info-circle mr-1"></i>活动基础信息</a></li>
-                <li><a href="#participation" class="px-3 py-2 rounded hover:bg-primary hover:text-white transition-custom"><i class="fa fa-user-plus mr-1"></i>参与方式</a></li>
-                <li><a href="#features" class="px-3 py-2 rounded hover:bg-primary hover:text-white transition-custom"><i class="fa fa-star mr-1"></i>活动特色</a></li>
-                <li><a href="#rules" class="px-3 py-2 rounded hover:bg-primary hover:text-white transition-custom"><i class="fa fa-list-alt mr-1"></i>活动规则</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- 主要内容 -->
-    <main class="container mx-auto px-4 py-8">
-        <div class="bg-white rounded-xl shadow-md overflow-hidden max-w-5xl mx-auto">
-            <!-- 封面图 - 使用与头部相同的渐变背景 -->
-            <div class="h-48 md:h-64 bg-gradient-to-r from-primary to-accent relative">
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <h1 class="text-3xl md:text-4xl font-bold text-white text-shadow text-center px-4">Real Operations V17 活动详细总结</h1>
+            
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex items-center">
+                        <!-- 头部logo：更新链接+放大+无白边 -->
+                        <div class="logo-container mr-4">
+                            <img src="https://s21.ax1x.com/2025/09/01/pVcRqtU.jpg" alt="东风俱乐部logo" class="w-16 h-16 object-cover">
+                        </div>
+                        <h1 class="text-2xl md:text-3xl font-bold">东风俱乐部 
+                            <span class="text-sm md:text-base font-normal block md:inline-block mt-1 md:mt-0">DongFeng Club</span>
+                        </h1>
+                    </div>
                 </div>
             </div>
+            
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+        </header>
 
-            <div class="p-6 md:p-8">
-                <p class="text-gray-700 mb-8 leading-relaxed">
-                    该网页是欧洲卡车模拟2（ETS2）线上平台TruckersMP发起的“Real Operations V17”活动专属介绍页，围绕活动核心信息、参与规则、玩家权益等维度展开，为参与者提供全面指引。
-                </p>
+        <main class="container mx-auto px-4 py-6 md:py-10">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <!-- 标题区域 -->
+                <div class="bg-gradient-to-r from-secondary to-accent text-white p-6 md:p-8">
+                    <h1 class="text-2xl md:text-3xl font-bold mb-4 text-shadow">TruckersMP智能标识（Smart Signs）</h1>
+                    <p class="opacity-90">翻译与详细总结</p>
+                </div>
 
-                <!-- 活动核心基础信息 -->
-                <section id="basic-info" class="mb-12 scroll-mt-20">
-                    <div class="flex items-center mb-6">
-                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-3">
-                            <i class="fa fa-info"></i>
-                        </div>
-                        <h2 class="text-2xl font-bold text-secondary">一、活动核心基础信息</h2>
+                <!-- 基本信息 -->
+                <div class="p-6 md:p-8 border-b border-gray-100">
+                    <div class="bg-blue-50 rounded-lg p-5 mb-8">
+                        <h2 class="text-lg font-semibold text-secondary mb-3 flex items-center">
+                            <i class="fa fa-info-circle text-accent mr-2"></i>基本信息
+                        </h2>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="font-medium min-w-[100px]">发布时间：</span>
+                                <span>2022年03月13日 02:11:00</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="font-medium min-w-[100px]">原文链接：</span>
+                                <a href="https://truckersmp.com/kb/1091" target="_blank" class="text-accent hover:underline flex items-center">
+                                    https://truckersmp.com/kb/1091
+                                    <i class="fa fa-external-link ml-1 text-xs"></i>
+                                </a>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="font-medium min-w-[100px]">核心主题：</span>
+                                <span>TruckersMP平台中“管控式高速公路标识（Managed Motorway Sign）”的含义、显示规则及驾驶员应对方法</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <h3 class="text-xl font-semibold text-primary mb-4">1. 活动基本属性</h3>
-                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
-                        <li><strong>活动名称</strong>：Real Operations V17（第十七届“真实运营”主题活动）</li>
-                        <li><strong>活动类型</strong>：ETS2（欧洲卡车模拟2）车队联机活动</li>
-                        <li><strong>活动氛围定位</strong>：Mellow（轻松友好）</li>
-                        <li><strong>服务器信息</strong>：使用专属“Event Server”（活动服务器），标识编号为1365、159</li>
-                        <li><strong>主沟通语言</strong>：英语</li>
-                        <li>
-                            <strong>专属沟通渠道</strong>：Discord频道（链接：
-                            <a href="https://discord.com/channels/307433337126125568/720400776366653490" target="_blank" class="text-primary hover:underline flex items-center">
-                                https://discord.com/... <i class="fa fa-external-link ml-1 text-xs"></i>
-                            </a>），供参与者实时交流
-                        </li>
-                    </ul>
+                    <!-- 第一部分：原文翻译 -->
+                    <section class="mb-10">
+                        <h2 class="text-xl md:text-2xl font-bold text-secondary mb-6 pb-2 border-b-2 border-accent">
+                            一、原文完整翻译
+                        </h2>
 
-                    <h3 class="text-xl font-semibold text-primary mb-4">2. 时间与时区说明（已转换为中国大陆时间 UTC+8）</h3>
-                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
-                        <li><strong>活动时间</strong>：2025年8月31日（周日）23:00 - 2025年9月1日（周一）03:00（中国大陆时间，原UTC时间：2025年8月30日15:00 - 19:00），总时长4小时</li>
-                        <li><strong>时区说明</strong>：中国大陆采用UTC+8时区，比原活动UTC时间快8小时，已完成时间转换，可直接参考上述时间参与</li>
-                    </ul>
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-accent mb-3">1.1 标题与引言</h3>
+                                <p class="font-medium mb-2">TruckersMP智能标识（TruckersMP Smart Signs）</p>
+                                <p class="text-gray-700 leading-relaxed">本文将为您清晰、详细地解释您在道路上可能遇到的各类 overhead（ overhead 指“架空式”）交通标识的含义！理解这些标识的意义及应对方式，能让您获得更优质的驾驶体验。</p>
+                            </div>
 
-                    <h3 class="text-xl font-semibold text-primary mb-4">3. 地理范围与路线规则</h3>
-                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
-                        <li><strong>核心覆盖区域</strong>：围绕6座欧洲城市展开，明确提及日内瓦、苏黎世、米兰，其余城市可通过活动专属“区域地图”查看</li>
-                        <li>
-                            <strong>起点与终点规则</strong>：
-                            <ul class="list-circle pl-6 mt-1">
-                                <li>起点：活动覆盖范围内的任意城市（“Any City Within The Area Of Play”）</li>
-                                <li>终点：活动范围内任意安全地点（“End Anywhere In A Safe Location”）</li>
+                            <div>
+                                <h3 class="text-lg font-semibold text-accent mb-3">1.2 进入智能标识区域（Entering a Smart Sign Area）</h3>
+                                <p class="text-gray-700 leading-relaxed mb-2">智能标识会显示预警信息，提示您前方存在危险或事故。</p>
+                                <p class="text-gray-700 leading-relaxed mb-2">当您接近该区域时，智能标识会显示您必须遵守的信息。</p>
+                                <p class="text-gray-700 leading-relaxed mb-2 font-medium text-primary">不遵守智能标识上显示的信息可能导致被服务器踢出。</p>
+                                <p class="text-gray-700 leading-relaxed mb-2">进入该区域后，您会看到架空门架（overhead gantries），每个车道上方均设有一块显示屏。</p>
+                                <p class="text-gray-700 leading-relaxed mb-2">这些显示屏可显示不同的限速要求、前方车道关闭预告或已关闭的车道信息。</p>
+                                <p class="text-gray-700 leading-relaxed mb-2">在每个车道上方的显示屏旁，您会看到大型信息板（large message boards），上面会显示关于前方路况的实用信息。</p>
+                                <p class="text-gray-700 leading-relaxed">若显示屏未启用，您应默认遵守常规限速，且应急车道（emergency lane）处于关闭状态。</p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-accent mb-3">1.3 管控式高速公路标识（Managed Motorway Sign）</h3>
+                                
+                                <div class="mb-5">
+                                    <p class="font-medium mb-2">1.3.1 空门架（Empty Gantry）</p>
+                                    <p class="text-gray-700 leading-relaxed mb-2">所有四个门架均不显示前方道路信息，意味着您可按限速继续行驶。应急车道禁止社会车辆通行。</p>
+                                    <p class="text-gray-700 leading-relaxed">这表明前方无活跃事故，道路畅通且安全，您可继续行驶。（注：此处“正常路况（Normal Conditions）”为该场景的补充说明）</p>
+                                    <img src="https://s3.bmp.ovh/imgs/2025/09/01/68594563aedca688.png" alt="空门架示意图，所有门架无显示信息" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                </div>
+
+                                <div class="mb-5">
+                                    <p class="font-medium mb-2">1.3.2 施工门架——涉及所有车道（Construction Gantry - Involving all lanes）</p>
+                                    <p class="text-gray-700 leading-relaxed mb-2">此类门架可能显示与您当前行驶道路相关的维护或交通信息。</p>
+                                    <img src="https://s3.bmp.ovh/imgs/2025/09/01/29023dc0fb451f6e.jpg" alt="施工门架示意图，显示所有车道开放但限速90km/h，应急车道有红叉" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                    <p class="font-medium text-accent">（该场景核心：限速降低（Reduced Speed Limit））</p>
+                                </div>
+
+                                <div class="mb-5">
+                                    <p class="font-medium mb-2">1.3.3 车道关闭预告——涉及不同车道（Lane closure ahead - Involving different lanes）</p>
+                                    <img src="https://s3.bmp.ovh/imgs/2025/09/01/a585881b25e3709a.jpg" alt="车道关闭预告示意图，显示各车道限速不同，应急车道有红叉" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                    <p class="font-medium text-accent">（该场景核心：可变限速（Varying Speed Restriction））</p>
+                                </div>
+
+                                <div class="mb-5">
+                                    <p class="font-medium mb-2">1.3.4 事故场景——接近事故区域（Incident - Approaching the incident）</p>
+                                    <img src="https://s3.bmp.ovh/imgs/2025/09/01/f06496b884b63e6c.jpg" alt="接近事故区域示意图，左侧车道有黄色闪烁箭头提示并道" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                    <p class="font-medium text-accent">（该场景核心：并道提示（Merge））</p>
+                                </div>
+
+                                <div class="mb-5">
+                                    <p class="font-medium mb-2">1.3.5 事故场景——处于事故区域（Incident - At the incident）</p>
+                                    <p class="text-gray-700 leading-relaxed mb-2">此处显示三个红叉（Red X），意味着仅一条车道可通行，且该车道限速50公里/小时。</p>
+                                    <img src="https://s3.bmp.ovh/imgs/2025/09/01/040c137081416503.jpg" alt="处于事故区域示意图，显示三个红叉，只有一条车道可通行" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                    <p class="text-gray-700 leading-relaxed mb-2 font-medium text-primary">驾驶进入任何显示红叉的车道均属禁止行为，且可能因“鲁莽驾驶”被服务器踢出。</p>
+                                    <p class="text-gray-700 leading-relaxed mb-2">红叉标识非常严肃，仅当前方存在危险时才会显示；为保障您和他人的安全，请勿驶入显示红叉的车道。</p>
+                                    <p class="text-gray-700 leading-relaxed">即使您未看到封闭车道内有任何异常，也不能驶入该车道。前方可能存在阻碍车道的危险物，或有工作人员在红叉标识的保护下作业。</p>
+                                </div>
+
+                                <div>
+                                    <p class="font-medium mb-2">1.3.6 事故场景——事故区域结束（Incident - End of incident）</p>
+                                    <p class="text-gray-700 leading-relaxed mb-2">您会看到“限制解除标识”（end of restrictions sign）或车道上方显示新的限速，意味着该车道可重新使用。</p>
+                                    <img src="https://s3.bmp.ovh/imgs/2025/09/01/fb27066d6200d37c.jpg" alt="事故区域结束示意图，显示限制已解除的标识" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                    <p class="font-medium text-accent">（该场景核心：限制解除（Cleared））</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-accent mb-3">1.4 动态应急车道启用（Dynamic emergency lane operating）</h3>
+                                <p class="text-gray-700 leading-relaxed mb-2">在本节中，我们将介绍应急车道如何作为常规车道开放，以提升交通通行能力。</p>
+                                <img src="https://s3.bmp.ovh/imgs/2025/09/01/508d66b42f67a614.png" alt="动态应急车道启用示意图，应急车道显示限速信息" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                <p class="text-gray-700 leading-relaxed mb-2 font-medium">当该模式启用时，<span class="text-primary">禁止在应急车道内停车</span>。</p>
+                                <p class="text-gray-700 leading-relaxed">若您无法继续行驶，应通过按下F7键前往最近的服务区。</p>
+
+                                <div class="mt-4">
+                                    <p class="font-medium mb-2">1.4.1 路口动态应急车道（Dynamic Emergency Lane Junction）</p>
+                                    <p class="text-gray-700 leading-relaxed mb-2">您可能会在路口看到特殊标识，提示您可使用应急车道而非汇入主车流。在此情况下，驶入匝道后，应急车道可正常使用。</p>
+                                    <img src="https://s3.bmp.ovh/imgs/2025/09/01/148892fab0a55548.png" alt="路口动态应急车道示意图，显示箭头指示使用应急车道" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                </div>
+
+                                <div class="mt-4">
+                                    <p class="font-medium mb-2">1.4.2 动态应急车道停用（Dynamic emergency lane not in operation）</p>
+                                    <img src="https://s21.ax1x.com/2025/09/01/pVcR5Xn.jpg" alt="动态应急车道停用示意图，显示应急车道关闭" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                    <p class="text-gray-700 leading-relaxed">此时应急车道已关闭，仅可在紧急情况下使用。<span class="font-medium text-accent">（该场景核心：动态应急车道关闭（Dynamic Closed Emergency Lane））</span></p>
+                                </div>
+
+                                <div class="mt-4">
+                                    <p class="font-medium mb-2">1.4.3 路口动态应急车道停用（Dynamic Emergency Lane Not In Operation）</p>
+                                    <p class="text-gray-700 leading-relaxed">在路口，标识会通过清晰的箭头提示您“正常汇入主车道”，而非使用应急车道。</p>
+                                    <img src="https://s21.ax1x.com/2025/09/01/pVcRomq.png" alt="路口动态应急车道停用示意图，箭头指示汇入主车道" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-accent mb-3">1.5 高速公路关闭（Motorway Closures）</h3>
+                                <p class="text-gray-700 leading-relaxed mb-4">本节将介绍“因事故需要关闭高速公路”的各类场景。标识会清晰引导您行驶至正确区域。</p>
+
+                                <div class="mb-4">
+                                    <p class="font-medium mb-2">1.5.1 匝道关闭（Slip Road Closure）</p>
+                                    <img src="https://s21.ax1x.com/2025/09/01/pVcRT00.png" alt="匝道关闭示意图，显示匝道关闭标识和方向箭头" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                </div>
+
+                                <div class="mb-4">
+                                    <p class="font-medium mb-2">1.5.2 高速公路从下一出口关闭（Motorway Closure）</p>
+                                    <p class="text-gray-700 leading-relaxed mb-2">若事故需要，高速公路可能从“下一出口”开始关闭。因此，您必须按照指示驶离高速公路。</p>
+                                    <img src="https://s21.ax1x.com/2025/09/01/pVcR77V.png" alt="高速公路从下一出口关闭示意图，显示黄色出口箭头" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                </div>
+
+                                <div>
+                                    <p class="font-medium mb-2">1.5.3 高速公路临时全封闭（Motorway Closed）</p>
+                                    <p class="text-gray-700 leading-relaxed mb-2">若道路发生严重情况，需临时全封闭高速公路，您会看到大型矩阵板显示“停车”及“道路封闭”信息；同时所有车道上方均会显示红叉（Red X’s）。</p>
+                                    <img src="https://s21.ax1x.com/2025/09/01/pVcRbkT.png" alt="高速公路临时全封闭示意图，显示停车和道路封闭信息及全车道红叉" class="my-4 rounded-lg shadow-md w-full max-w-2xl">
+                                    <p class="text-gray-700 leading-relaxed font-medium text-primary">驶过该标识属鲁莽驾驶行为，可能会被服务器踢出。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 第二部分：内容详细总结 -->
+                    <section>
+                        <h2 class="text-xl md:text-2xl font-bold text-secondary mb-6 pb-2 border-b-2 border-accent">
+                            二、内容详细总结
+                        </h2>
+
+                        <p class="text-gray-700 leading-relaxed mb-6">本文核心是规范TruckersMP（卡车模拟多人联机平台）中“智能交通标识”的使用规则，通过“标识显示内容-含义-驾驶员操作-违规后果”的逻辑，覆盖“常规路况、施工、事故、应急车道、道路关闭”5大类场景，确保驾驶员理解标识并安全行驶。</p>
+
+                        <div class="mb-8">
+                            <h3 class="text-lg font-semibold text-accent mb-3">2.1 通用规则（进入智能标识区域必知）</h3>
+                            <ul class="list-disc pl-6 space-y-2 text-gray-700">
+                                <li>智能标识的核心作用：预警前方危险/事故、发布限速/车道关闭指令，信息具有<span class="font-medium text-primary">强制性</span>。</li>
+                                <li>物理载体：架空门架（每个车道配显示屏）+ 大型信息板（补充路况）。</li>
+                                <li>默认规则：显示屏未启用时，遵守常规限速，应急车道关闭。</li>
+                                <li>违规后果：不遵守标识信息→<span class="font-medium text-primary">被服务器踢出</span>；驾驶进入红叉车道→<span class="font-medium text-primary">因“鲁莽驾驶”被踢出</span>。</li>
                             </ul>
-                        </li>
-                        <li><strong>路线自由度</strong>：参与者可在活动高亮区域内自由漫游，选择任意路线；若想重温某一“运营场景”，可在路口、环岛等安全位置掉头返回</li>
-                    </ul>
-                </section>
-
-                <!-- 参与方式与专属权益 -->
-                <section id="participation" class="mb-12 scroll-mt-20">
-                    <div class="flex items-center mb-6">
-                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-3">
-                            <i class="fa fa-user"></i>
                         </div>
-                        <h2 class="text-2xl font-bold text-secondary">二、参与方式与专属权益</h2>
-                    </div>
 
-                    <h3 class="text-xl font-semibold text-primary mb-4">1. 参与步骤</h3>
-                    <ol class="list-decimal pl-6 mb-6 space-y-2 text-gray-700">
-                        <li>打开TruckersMP启动器，运行欧洲卡车模拟2（ETS2）</li>
-                        <li>在服务器列表顶部找到“Real Operations V17”专属服务器，点击选择即可加入</li>
-                    </ol>
-
-                    <h3 class="text-xl font-semibold text-primary mb-4">2. 参与者专属奖励</h3>
-                    <div class="bg-blue-50 border-l-4 border-primary p-4 rounded mb-6">
-                        <p class="text-gray-700">
-                            参与本次活动可获得<strong class="text-primary">个人账号专属特殊成就</strong>，该成就仅针对本次活动发放，具有唯一性，无其他获取途径
-                        </p>
-                    </div>
-                </section>
-
-                <!-- 活动特色内容 -->
-                <section id="features" class="mb-12 scroll-mt-20">
-                    <div class="flex items-center mb-6">
-                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-3">
-                            <i class="fa fa-star"></i>
+                        <div class="mb-8 overflow-x-auto">
+                            <h3 class="text-lg font-semibold text-accent mb-3">2.2 5大类场景标识详解</h3>
+                            <table class="min-w-full border-collapse">
+                                <thead>
+                                    <tr class="bg-blue-50">
+                                        <th class="border border-gray-300 px-4 py-3 text-left text-sm font-semibold text-secondary">场景类型</th>
+                                        <th class="border border-gray-300 px-4 py-3 text-left text-sm font-semibold text-secondary">标识核心显示内容</th>
+                                        <th class="border border-gray-300 px-4 py-3 text-left text-sm font-semibold text-secondary">含义与应对方法</th>
+                                        <th class="border border-gray-300 px-4 py-3 text-left text-sm font-semibold text-secondary">关键提醒</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition-custom">
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">1. 正常路况（空门架）</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">所有门架无信息，应急车道无红叉（默认关闭）</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">前方无事故，道路畅通；按常规限速行驶，不占用应急车道</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">最基础场景，无特殊限制</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-custom">
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">2. 施工场景</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">车道开放+限速降低（如90km/h），应急车道红叉，信息板显示“施工预告”</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">前方施工，需减速；禁止占用应急车道</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">限速为核心指令，需严格遵守</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-custom">
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">3. 事故场景（分三阶段）</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">
+                                            • 接近事故：左车道黄色闪烁箭头（并道提示）<br>
+                                            • 处于事故：3个红叉+1条车道限速50km/h<br>
+                                            • 事故结束：“限制解除标识”或新限速
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">
+                                            • 接近时：安全并道至中间车道<br>
+                                            • 处于时：仅走开放车道，严禁走红叉车道<br>
+                                            • 结束时：可重新使用原封闭车道
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">红叉车道即使无可见危险，也可能有作业人员/障碍物，绝对禁止驶入</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-custom">
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">4. 动态应急车道</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">
+                                            • 启用：应急车道显示限速<br>
+                                            • 停用：应急车道红叉+箭头引导回主车道
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">
+                                            • 启用时：应急车道可正常行驶，禁止停车；故障需按F7去服务区<br>
+                                            • 停用时：立即回主车道，应急车道仅应急使用
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">路口可能有特殊箭头，需按箭头选择“用应急车道”或“汇入主车流”</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-custom">
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">5. 高速公路关闭</td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">
+                                            • 匝道关闭：门架显示“匝道关闭”+箭头<br>
+                                            • 下一出口关闭：车道上方黄色出口箭头<br>
+                                            • 全封闭：信息板“停车/道路封闭”+全车道红叉
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">
+                                            • 匝道关闭：不驶入该匝道<br>
+                                            • 下一出口关闭：按指示驶离高速<br>
+                                            • 全封闭：立即停车，禁止驶过标识
+                                        </td>
+                                        <td class="border border-gray-300 px-4 py-3 text-sm">全封闭场景违规后果最严重，必被踢出服务器</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <h2 class="text-2xl font-bold text-secondary">三、活动特色内容</h2>
-                    </div>
 
-                    <p class="text-gray-700 mb-4">作为年度重点活动，本次活动主打“实时沉浸式体验”，核心特色包括：</p>
-                    
-                    <div class="grid md:grid-cols-3 gap-4 mb-6">
-                        <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-custom">
-                            <div class="flex items-center mb-2">
-                                <i class="fa fa-refresh text-primary mr-2"></i>
-                                <h4 class="font-semibold">动态运营场景</h4>
-                            </div>
-                            <p class="text-sm text-gray-600">活动过程中会实时触发各类运营事件，参与者可能在行驶中直接目睹场景发生</p>
-                        </div>
-                        
-                        <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-custom">
-                            <div class="flex items-center mb-2">
-                                <i class="fa fa-ambulance text-primary mr-2"></i>
-                                <h4 class="font-semibold">多元特殊元素</h4>
-                            </div>
-                            <p class="text-sm text-gray-600">包含应急车辆调度、警车追捕等互动场景，模拟真实货运道路环境</p>
-                        </div>
-                        
-                        <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-custom">
-                            <div class="flex items-center mb-2">
-                                <i class="fa fa-tasks text-primary mr-2"></i>
-                                <h4 class="font-semibold">灵活任务选择</h4>
-                            </div>
-                            <p class="text-sm text-gray-600">参与者可在活动区域内接取“城市间货运任务”，也可使用自有挂车行驶</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 活动规则 -->
-                <section id="rules" class="mb-8 scroll-mt-20">
-                    <div class="flex items-center mb-6">
-                        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mr-3">
-                            <i class="fa fa-gavel"></i>
-                        </div>
-                        <h2 class="text-2xl font-bold text-secondary">四、活动规则（含临时特殊规则）</h2>
-                    </div>
-
-                    <p class="text-gray-700 mb-4">本次活动规则经“Event Management”（活动管理团队）审核通过，参与者需严格遵守，具体分为基础行为规范、车辆与车道规则、工作人员协作要求三类：</p>
-
-                    <h3 class="text-xl font-semibold text-primary mb-4">1. 基础行为规范</h3>
-                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
-                        <li>禁止干扰TruckersMP团队预设的“运营场景”，禁止私自发起“个人运营活动”（包括组建私人超大型车辆车队）</li>
-                        <li>超车需满足“安全+合规”双重条件，严禁从排队车流中超车</li>
-                        <li>需全程在“Real Operations V17活动区域”内行驶，超出区域将被判定为“自由漫游”，脱离活动范畴</li>
-                    </ul>
-
-                    <h3 class="text-xl font-semibold text-primary mb-4">2. 车辆与车道规则</h3>
-                    <div class="responsive-table mb-6">
-                        <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 border-b">规则类别</th>
-                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 border-b">具体要求</th>
-                                    <th class="py-3 px-4 text-left text-sm font-semibold text-gray-700 border-b">补充说明</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <tr class="hover:bg-gray-50 transition-custom">
-                                    <td class="py-3 px-4 text-sm text-gray-700">车辆配置限制</td>
-                                    <td class="py-3 px-4 text-sm text-gray-700">禁止使用双挂车、三挂车、HCT（重型组合挂车）配置</td>
-                                    <td class="py-3 px-4 text-sm text-gray-700">无例外情况，所有参与者统一执行</td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-custom">
-                                    <td class="py-3 px-4 text-sm text-gray-700">车道使用规范</td>
-                                    <td class="py-3 px-4 text-sm text-gray-700">车道上方显示“红色X”时，禁止进入该车道；若所有车道均显示“红色X”，需在原地等待信号变更</td>
-                                    <td class="py-3 px-4 text-sm text-gray-700">进入禁行车道前，会有提前提醒；禁止穿越“全车道红色X”标识的龙门架</td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-custom">
-                                    <td class="py-3 px-4 text-sm text-gray-700">限速要求</td>
-                                    <td class="py-3 px-4 text-sm text-gray-700">需遵守“车道上方 overhead 限速标识”，该限速可能与导航显示速度不一致</td>
-                                    <td class="py-3 px-4 text-sm text-gray-700">由“highways team”（高速公路管理团队）负责执法，违规将被处理</td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 transition-custom">
-                                    <td class="py-3 px-4 text-sm text-gray-700">应急车道使用</td>
-                                    <td class="py-3 px-4 text-sm text-gray-700">应急车道可临时作为“正常通行车道”，但仅能在“overhead信号指引”下进入，且需遵守该车道专属限速；禁止在应急车道作为通行车道时停车（否则判定为“阻塞交通”）</td>
-                                    <td class="py-3 px-4 text-sm text-gray-700">若车辆故障无法移动，需立即按“F7+Enter”发起求助，避免阻塞道路</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3 class="text-xl font-semibold text-primary mb-4">3. 工作人员协作要求</h3>
-                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
-                        <li>需无条件服从工作人员指令，包括但不限于：被引导靠边停车、为应急车辆让行、配合“滚动式封路”（临时分段封路）</li>
-                        <li>工作人员使用CB（车载对讲机）时，不受“CB滥用规则”限制，参与者禁止干涉工作人员通讯</li>
-                        <li>
-                            需实时关注“overhead signage”（ overhead 交通标识），该标识可能在活动中随时变更；若需了解标识含义，可参考知识库链接（
-                            <a href="https://truckersmp.com/knowledge-base/article/1091" target="_blank" class="text-primary hover:underline flex items-center">
-                                https://truckersmp.com/... <i class="fa fa-external-link ml-1 text-xs"></i>
-                            </a>，支持多语言）
-                        </li>
-                    </ul>
-
-                    <h3 class="text-xl font-semibold text-primary mb-4">4. 特殊规则提示</h3>
-                    <ul class="list-disc pl-6 mb-6 space-y-2 text-gray-700">
-                        <li>
-                            应急车辆让行有专属指导：可通过视频链接（
-                            <a href="https://youtu.be/Sq_qBijChWk" target="_blank" class="text-primary hover:underline flex items-center">
-                                https://youtu.be/... <i class="fa fa-external-link ml-1 text-xs"></i>
-                            </a>）学习“安全让行方法”，视频跳转至外部平台
-                        </li>
-                        <li>所有规则最终解释权归TruckersMP活动管理团队所有，违规可能面临临时禁赛、账号限制等处罚</li>
-                    </ul>
-                </section>
-
-                <!-- 快速参考卡片 -->
-                <div class="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-5 border border-primary/20 mb-8">
-                    <h3 class="text-lg font-semibold text-primary mb-3 flex items-center">
-                        <i class="fa fa-calendar-check-o mr-2"></i> 活动快速参考
-                    </h3>
-                    <div class="grid md:grid-cols-2 gap-4">
                         <div>
-                            <p class="text-sm text-gray-600"><strong class="text-gray-800">日期：</strong>2025年8月31日（周日）- 9月1日（周一）</p>
-                            <p class="text-sm text-gray-600"><strong class="text-gray-800">时间：</strong>23:00 - 03:00（中国大陆时间）</p>
-                            <p class="text-sm text-gray-600"><strong class="text-gray-800">服务器：</strong>Real Operations V17（1365、159）</p>
+                            <h3 class="text-lg font-semibold text-accent mb-3">2.3 核心安全底线</h3>
+                            <ul class="list-disc pl-6 space-y-2 text-gray-700">
+                                <li>红叉（Red X）是“最高级危险提示”，任何情况下不得驶入显示红叉的车道。</li>
+                                <li>动态应急车道启用时，<span class="font-medium text-primary">绝对禁止停车</span>，故障需通过F7前往服务区。</li>
+                                <li>所有标识信息均具有强制性，“未看到危险”不能成为违规理由（如封闭车道内可能有隐藏障碍物/作业人员）。</li>
+                            </ul>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-600"><strong class="text-gray-800">语言：</strong>英语</p>
-                            <p class="text-sm text-gray-600"><strong class="text-gray-800">奖励：</strong>专属活动成就</p>
-                            <p class="text-sm text-gray-600"><strong class="text-gray-800">区域：</strong>欧洲6城市（含日内瓦、苏黎世、米兰）</p>
-                        </div>
-                    </div>
+                    </section>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <!-- 页脚 -->
-    <footer class="bg-secondary text-white py-8 mt-12">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <div class="flex items-center justify-center md:justify-start">
-                        <i class="fa fa-truck mr-2 text-xl"></i>
-                        <span class="text-xl font-semibold">DongFeng Club 东风俱乐部</span>
+        <!-- 尾部区域（含logo、QQ群、浏览数） -->
+        <footer class="bg-secondary text-white mt-10">
+            <div class="container mx-auto px-4 py-8">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                    <div class="flex items-center mb-4 md:mb-0">
+                        <!-- 底部logo：同步更新链接+适配尺寸 -->
+                        <div class="logo-container mr-3">
+                            <img src="https://s21.ax1x.com/2025/09/01/pVcRqtU.jpg" alt="东风俱乐部logo" class="w-12 h-12 object-cover">
+                        </div>
+                        <h2 class="text-xl font-bold">东风俱乐部 <span class="text-sm font-normal">DongFeng Club</span></h2>
                     </div>
-                    <p class="text-gray-400 text-sm mt-2 text-center md:text-left">欧洲卡车模拟2 玩家社区</p>
                 </div>
                 
-                <div class="flex flex-col items-center md:items-end">
-                    <!-- 添加QQ交流群信息 -->
-                    <div class="mb-3 flex items-center">
-                        <i class="fa fa-qq text-gray-300 mr-2 text-xl"></i>
-                        <span class="text-white font-medium">QQ交流群：581857596</span>
-                    </div>
-                    <p class="text-gray-400 text-sm">© 2025 DongFeng Club. 保留所有权利。</p>
-                    <!-- 原网页地址出处 -->
-                    <p class="text-gray-500 text-xs mt-1">信息来源：<a href="https://truckersmp.com/events/30406-real-operations-v17" target="_blank" class="hover:text-gray-300 transition-custom">https://truckersmp.com/events/30406-real-operations-v17</a></p>
+                <div class="border-t border-gray-700 pt-6 text-center">
+                    <p class="mb-2">QQ交流群：<a href="https://qm.qq.com/cgi-bin/qm/qr?k=581857596" target="_blank" class="text-blue-300 hover:underline">581857596</a></p>
+                    <p class="mb-2 flex items-center justify-center text-gray-300">
+                        <i class="fa fa-eye mr-2"></i> 浏览次数：<span id="viewCount">1,254</span>
+                    </p>
+                    <p class="text-gray-400 text-sm">© 2023 东风俱乐部 DongFeng Club. 保留所有权利。</p>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <!-- 返回顶部按钮 -->
-    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-custom z-40">
-        <i class="fa fa-arrow-up"></i>
-    </button>
+        <!-- 回到顶部按钮 -->
+        <button id="backToTop" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300">
+            <i class="fa fa-arrow-up"></i>
+        </button>
+    </div>
 
-    <!-- JavaScript -->
     <script>
-        // 页面加载完成后隐藏加载动画
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const loader = document.getElementById('loader');
-                loader.classList.add('opacity-0');
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 300);
-            }, 500);
+        // 加载进度模拟
+        function updateProgress(progress) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // 页面加载完成后显示内容
+        function pageLoaded() {
+            document.body.classList.add('loaded');
+        }
+
+        // 模拟加载进度
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 10;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+            }
+            updateProgress(progress);
+        }, 200);
+
+        // 监听页面加载完成事件
+        window.addEventListener('load', () => {
+            // 确保进度条达到100%
+            updateProgress(100);
+            // 短暂延迟后隐藏加载动画，确保视觉流畅性
+            setTimeout(pageLoaded, 500);
         });
 
-        // 返回顶部按钮
-        const backToTopButton = document.getElementById('back-to-top');
+        // 返回顶部按钮功能
+        const backToTopButton = document.getElementById('backToTop');
         
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', () => {
             if (window.pageYOffset > 300) {
                 backToTopButton.classList.remove('opacity-0', 'invisible');
                 backToTopButton.classList.add('opacity-100', 'visible');
@@ -380,41 +489,40 @@
                 backToTopButton.classList.remove('opacity-100', 'visible');
                 backToTopButton.classList.add('opacity-0', 'invisible');
             }
-            
-            // 导航栏滚动效果
-            const nav = document.querySelector('nav');
-            if (window.pageYOffset > 100) {
-                nav.classList.add('py-2', 'shadow-lg');
-                nav.classList.remove('py-3', 'shadow-md');
-            } else {
-                nav.classList.add('py-3', 'shadow-md');
-                nav.classList.remove('py-2', 'shadow-lg');
-            }
         });
         
-        backToTopButton.addEventListener('click', function() {
+        backToTopButton.addEventListener('click', () => {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
         });
 
-        // 平滑滚动到锚点
+        // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
+
+        // 浏览次数模拟
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        }
+        
+        setTimeout(() => {
+            const viewCountEl = document.getElementById('viewCount');
+            let count = 1256;
+            
+            setInterval(() => {
+                count += Math.floor(Math.random() * 3) + 1;
+                viewCountEl.textContent = formatNumber(count);
+            }, 30000);
+        }, 5000);
     </script>
 </body>
 </html>
